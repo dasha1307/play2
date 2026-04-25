@@ -3,12 +3,12 @@
     padding: 0;
     box-sizing: border-box;
     user-select: none;
-    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     font-family: 'Cinzel', 'MedievalSharp', serif;
     min-height: 100vh;
+    overflow-x: hidden;
     background: #0a0502;
 }
 
@@ -42,7 +42,7 @@ body {
     z-index: 100;
 }
 
-/* Летающие светящиеся точки */
+/* ========== ЛЕТАЮЩИЕ СВЕТЯЩИЕСЯ ТОЧКИ ========== */
 .floating-particles {
     position: fixed;
     top: 0;
@@ -62,23 +62,31 @@ body {
     border-radius: 50%;
     opacity: 0;
     animation: particleFloat 10s infinite linear;
-    box-shadow: 0 0 8px #ffaa44;
+    box-shadow: 0 0 8px #ffaa44, 0 0 3px #ffaa44;
 }
 
 @keyframes particleFloat {
-    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-    20% { opacity: 0.8; }
-    80% { opacity: 0.6; }
-    100% { transform: translateY(-50px) translateX(30px); opacity: 0; }
+    0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+    }
+    80% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-50px) translateX(30px);
+        opacity: 0;
+    }
 }
 
-/* Основной контейнер - вертикальный на мобилках */
 .game-container {
     display: flex;
-    flex-direction: column;
     min-height: 100vh;
-    padding: 15px;
-    gap: 15px;
+    padding: 20px;
+    gap: 20px;
     position: relative;
     z-index: 20;
 }
@@ -86,210 +94,132 @@ body {
 .dark-panel {
     background: rgba(8, 5, 3, 0.85);
     backdrop-filter: blur(8px);
-    border: 2px solid #c89a4a;
-    border-radius: 25px;
+    border: 2px solid #8a6a3a;
+    border-radius: 20px;
     padding: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
 }
 
-/* Ингредиенты - крупные кнопки */
-.ingredients-panel {
-    width: 100%;
-}
-
-.ingredients-panel h2 {
+.ingredients-panel { width: 220px; }
+.ingredients-panel h2, .result-panel h2 {
     color: #e8c47a;
     text-align: center;
-    font-size: 1.6rem;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #8a6a3a;
-    padding-bottom: 10px;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #8a6a3a;
+    padding-bottom: 8px;
 }
+.ingredients-grid { display: flex; flex-direction: column; gap: 15px; }
 
-.ingredients-grid {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
+/* ИНГРЕДИЕНТЫ С ПОДСВЕТКОЙ И УВЕЛИЧЕНИЕМ */
 .ingredient-item {
     background: linear-gradient(135deg, #2a1f15, #1a120a);
-    border: 3px solid #b8884a;
-    border-radius: 80px;
-    padding: 15px 25px;
+    border: 2px solid #b8884a;
+    border-radius: 60px;
+    padding: 12px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: all 0.1s ease;
+    gap: 15px;
+    cursor: grab;
+    transition: all 0.2s ease;
     color: #f2dbaa;
     font-weight: bold;
-    box-shadow: 0 0 10px rgba(200, 150, 70, 0.3);
-    min-width: 100px;
+    box-shadow: 0 0 5px rgba(200, 150, 70, 0.3);
+}
+
+.ingredient-item:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #3a2a1f, #2a1a10);
+    border-color: #ffcc66;
+    box-shadow: 0 0 15px rgba(255, 200, 100, 0.6);
+    cursor: grab;
 }
 
 .ingredient-item:active {
-    transform: scale(0.95);
-    background: linear-gradient(135deg, #3a2a1f, #2a1a10);
-    border-color: #ffcc66;
+    cursor: grabbing;
+    transform: scale(0.98);
 }
 
 .ingredient-icon {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    transition: all 0.2s;
 }
 
-.ingredient-item span {
-    font-size: 1.1rem;
+.ingredient-item:hover .ingredient-icon {
+    font-size: 2.2rem;
 }
 
-/* Центральная область */
 .cauldron-area {
-    width: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
+    min-width: 450px;
 }
 
+/* Верхняя панель статуса */
 .top-status {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    gap: 15px;
+    gap: 20px;
     margin-bottom: 15px;
 }
-
 .lives-container {
     background: #1a0f08cc;
-    border-radius: 50px;
-    padding: 10px 20px;
+    border-radius: 40px;
+    padding: 8px 20px;
     text-align: center;
-    border: 2px solid #c89a4a;
+    border: 1px solid #c89a4a;
+    min-width: 140px;
 }
-
-.lives-label {
-    font-size: 0.9rem;
-    color: #c9a85b;
-    display: block;
-}
-
-.hearts {
-    font-size: 1.6rem;
-    letter-spacing: 5px;
-}
+.lives-label { font-size: 0.8rem; color: #c9a85b; display: block; }
+.hearts { font-size: 1.5rem; letter-spacing: 5px; }
+.heart { transition: all 0.2s; }
+.heart.lost { opacity: 0.2; filter: grayscale(1); }
 
 .rank-container {
     background: #1a0f08cc;
-    border-radius: 50px;
-    padding: 10px 20px;
+    border-radius: 40px;
+    padding: 8px 20px;
     text-align: center;
     flex: 1;
-    border: 2px solid #c89a4a;
+    border: 1px solid #c89a4a;
 }
-
-.rank-label {
-    font-size: 0.8rem;
-    color: #c9a85b;
-}
-
-.rank-value {
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #ffdd99;
-}
-
+.rank-label { font-size: 0.7rem; color: #c9a85b; }
+.rank-value { font-size: 1.2rem; font-weight: bold; color: #ffdd99; margin-left: 10px; }
 .progress-bar-container {
     width: 100%;
     background-color: #2a1a10;
     border-radius: 20px;
     margin: 5px 0;
-    height: 10px;
+    height: 8px;
 }
-
 .progress-bar {
-    height: 10px;
+    height: 8px;
     background: linear-gradient(90deg, #ffaa44, #ffdd88);
     border-radius: 20px;
     width: 0%;
     transition: width 0.3s;
 }
+.xp-text { font-size: 0.6rem; color: #e8c47a; }
 
-.xp-text {
-    font-size: 0.7rem;
-    color: #e8c47a;
-}
+/* Огонь */
+.fire-pit { position: relative; width: 200px; height: 80px; margin-bottom: 10px; }
+.fire { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 100px; height: 80px; background: radial-gradient(ellipse at center, #ff8844 0%, #ff4411 40%, rgba(255, 68, 0, 0) 80%); border-radius: 50%; filter: blur(15px); animation: firePulse 0.15s infinite alternate; }
+.fire-core { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 55px; height: 55px; background: radial-gradient(ellipse, #ffcc55 0%, #ff6622 70%, rgba(0,0,0,0) 100%); border-radius: 50%; filter: blur(8px); animation: fireCorePulse 0.2s infinite alternate; }
+.fire-light { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); width: 220px; height: 100px; background: radial-gradient(ellipse, #ff8833 0%, rgba(255, 68, 0, 0.3) 60%, transparent 100%); filter: blur(20px); animation: fireLightFlicker 0.3s infinite alternate; }
+@keyframes firePulse { 0% { opacity: 0.7; transform: translateX(-50%) scale(0.9); } 100% { opacity: 1; transform: translateX(-50%) scale(1.1); } }
+@keyframes fireCorePulse { 0% { opacity: 0.8; transform: translateX(-50%) scale(0.85); } 100% { opacity: 1; transform: translateX(-50%) scale(1.0); } }
+@keyframes fireLightFlicker { 0% { opacity: 0.5; transform: translateX(-50%) scaleX(0.9) scaleY(0.8); } 100% { opacity: 0.9; transform: translateX(-50%) scaleX(1.1) scaleY(1.0); } }
 
-/* Огонь (увеличен) */
-.fire-pit {
-    position: relative;
-    width: 200px;
-    height: 80px;
-    margin-bottom: 10px;
-}
-
-.fire {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 80px;
-    background: radial-gradient(ellipse at center, #ff8844 0%, #ff4411 40%, rgba(255, 68, 0, 0) 80%);
-    border-radius: 50%;
-    filter: blur(15px);
-    animation: firePulse 0.15s infinite alternate;
-}
-
-.fire-core {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 65px;
-    height: 60px;
-    background: radial-gradient(ellipse, #ffcc55 0%, #ff6622 70%, rgba(0,0,0,0) 100%);
-    border-radius: 50%;
-    filter: blur(10px);
-    animation: fireCorePulse 0.2s infinite alternate;
-}
-
-.fire-light {
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 250px;
-    height: 120px;
-    background: radial-gradient(ellipse, #ff8833 0%, rgba(255, 68, 0, 0.3) 60%, transparent 100%);
-    filter: blur(20px);
-    animation: fireLightFlicker 0.3s infinite alternate;
-}
-
-@keyframes firePulse {
-    0% { opacity: 0.7; transform: translateX(-50%) scale(0.9); }
-    100% { opacity: 1; transform: translateX(-50%) scale(1.1); }
-}
-@keyframes fireCorePulse {
-    0% { opacity: 0.8; transform: translateX(-50%) scale(0.85); }
-    100% { opacity: 1; transform: translateX(-50%) scale(1.0); }
-}
-@keyframes fireLightFlicker {
-    0% { opacity: 0.5; transform: translateX(-50%) scaleX(0.9) scaleY(0.8); }
-    100% { opacity: 0.9; transform: translateX(-50%) scaleX(1.1) scaleY(1.0); }
-}
-
-/* Котёл (увеличен) */
-.cauldron-wrapper {
-    position: relative;
-    margin: 15px 0;
-}
+/* Котёл (без ручек) */
+.cauldron-wrapper { position: relative; margin: 15px 0; }
 
 .cauldron {
-    width: 350px;
-    height: 260px;
+    width: 400px;
+    height: 290px;
     position: relative;
     cursor: pointer;
 }
@@ -342,18 +272,19 @@ body {
     border-top: 2px solid #7a5a30;
 }
 
+/* Ножки котла */
 .cauldron-leg {
     position: absolute;
     bottom: -20px;
-    width: 20px;
-    height: 28px;
+    width: 22px;
+    height: 30px;
     background: linear-gradient(90deg, #3a2518, #1a0f08);
     border-radius: 0 0 12px 12px;
     z-index: 5;
 }
-.leg-left { left: 35px; transform: skewX(-5deg); }
-.leg-right { right: 35px; transform: skewX(5deg); }
-.leg-center { left: 50%; transform: translateX(-50%); width: 25px; height: 26px; background: #2a1a0a; }
+.leg-left { left: 40px; transform: skewX(-5deg); }
+.leg-right { right: 40px; transform: skewX(5deg); }
+.leg-center { left: 50%; transform: translateX(-50%); width: 28px; height: 28px; background: #2a1a0a; }
 
 .cauldron-inner {
     position: absolute;
@@ -364,7 +295,8 @@ body {
     background: #0a0805;
     border-radius: 45% 45% 40% 40% / 40% 40% 30% 30%;
     overflow: hidden;
-    box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.9);
+    box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid #3a2a1a;
 }
 
 .liquid {
@@ -375,6 +307,19 @@ body {
     background: linear-gradient(135deg, #2d6a2d, #1a4a1a);
     border-radius: 40% 40% 30% 30%;
     transition: height 0.3s ease, background 0.4s ease;
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.liquid::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 15%;
+    width: 30%;
+    height: 25%;
+    background: radial-gradient(ellipse, rgba(255, 255, 200, 0.3) 0%, rgba(255, 255, 200, 0) 80%);
+    border-radius: 50%;
+    pointer-events: none;
 }
 
 .ingredients-in-cauldron {
@@ -387,14 +332,14 @@ body {
     flex-wrap: wrap;
     align-items: flex-end;
     justify-content: center;
-    gap: 8px;
-    padding: 12px;
+    gap: 5px;
+    padding: 10px;
     pointer-events: none;
 }
 
 .ingredient-piece {
-    font-size: 1.8rem;
-    filter: drop-shadow(0 0 3px rgba(0,0,0,0.5));
+    font-size: 1.6rem;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
     animation: floatIn 0.3s ease-out;
 }
 
@@ -403,13 +348,13 @@ body {
     to { transform: translateY(0) rotate(0); opacity: 1; }
 }
 
-/* Пар (густой) */
+/* ПАР (ГУСТОЙ) */
 .steam-container {
     position: absolute;
     bottom: 65%;
     left: 5%;
     width: 90%;
-    height: 120px;
+    height: 140px;
     pointer-events: none;
     z-index: 20;
 }
@@ -417,48 +362,54 @@ body {
 .steam {
     position: absolute;
     bottom: 0;
-    background: radial-gradient(ellipse, rgba(220, 210, 190, 0.5) 0%, rgba(180, 160, 130, 0.2) 40%, rgba(100, 80, 60, 0) 80%);
+    background: radial-gradient(ellipse, rgba(220, 210, 190, 0.6) 0%, rgba(180, 160, 130, 0.3) 40%, rgba(100, 80, 60, 0) 80%);
     border-radius: 50%;
-    filter: blur(12px);
+    filter: blur(15px);
     animation: steamRise 3s infinite ease-out;
 }
 
-.steam1 { left: 10%; width: 60px; height: 90px; animation-delay: 0s; }
-.steam2 { left: 35%; width: 70px; height: 100px; animation-delay: 0.8s; }
-.steam3 { left: 60%; width: 55px; height: 80px; animation-delay: 1.6s; }
-.steam4 { left: 80%; width: 50px; height: 75px; animation-delay: 2.2s; }
+.steam1 { left: 10%; width: 70px; height: 110px; animation-delay: 0s; animation-duration: 3.5s; }
+.steam2 { left: 35%; width: 85px; height: 130px; animation-delay: 0.8s; animation-duration: 4s; }
+.steam3 { left: 60%; width: 65px; height: 100px; animation-delay: 1.6s; animation-duration: 3.2s; }
+.steam4 { left: 80%; width: 55px; height: 90px; animation-delay: 2.2s; animation-duration: 3.8s; }
 
 @keyframes steamRise {
-    0% { bottom: 0; opacity: 0.6; transform: scale(0.7) translateY(0); }
-    50% { opacity: 0.7; transform: scale(1.0) translateY(-25px); }
-    100% { bottom: 100%; opacity: 0; transform: scale(1.2) translateY(-60px); }
+    0% { bottom: 0; opacity: 0.7; transform: scale(0.7) translateY(0); }
+    50% { opacity: 0.8; transform: scale(1.1) translateY(-30px); }
+    100% { bottom: 100%; opacity: 0; transform: scale(1.4) translateY(-80px); }
 }
 
-/* Ведьмочка (крупнее) */
+/* Ведьмочка */
 .witch {
     position: absolute;
-    top: -120px;
-    right: -5px;
-    width: 90px;
-    height: 110px;
+    bottom: -10%;
+    right: -120px;
+    width: 200px;
+    height: 260px;
     cursor: pointer;
     z-index: 30;
+    transition: all 0.2s ease;
 }
 
 .witch-image {
     width: 100%;
     height: auto;
-    border-radius: 20px;
+    border-radius: 25px;
+    transition: all 0.2s;
+}
+
+.witch-image:hover {
+    transform: scale(1.02);
 }
 
 .witch-bubble {
     position: absolute;
-    top: -55px;
-    left: -60px;
+    top: -60px;
+    left: -30px;
     background: #fff8e7;
-    border-radius: 20px 20px 20px 8px;
-    padding: 8px 15px;
-    font-size: 0.85rem;
+    border-radius: 25px 25px 25px 8px;
+    padding: 10px 18px;
+    font-size: 0.9rem;
     color: #2a1a3a;
     font-family: 'Cinzel', serif;
     white-space: nowrap;
@@ -470,13 +421,13 @@ body {
 .witch-bubble::before {
     content: '';
     position: absolute;
-    bottom: -8px;
-    left: 45px;
+    bottom: -10px;
+    left: 20px;
     width: 0;
     height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid #fff8e7;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #fff8e7;
 }
 
 .witch.stirring-witch {
@@ -484,8 +435,8 @@ body {
 }
 
 @keyframes witchBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(3deg); }
 }
 
 .cauldron-glow {
@@ -493,8 +444,8 @@ body {
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 380px;
-    height: 300px;
+    width: 440px;
+    height: 340px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(255, 140, 50, 0) 0%, rgba(255, 140, 50, 0) 100%);
     pointer-events: none;
@@ -502,65 +453,49 @@ body {
     z-index: 5;
 }
 
-/* Кнопки действий (большие для пальцев) */
 .action-buttons {
     display: flex;
-    gap: 15px;
-    margin-top: 25px;
-    justify-content: center;
-    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 30px;
 }
 
 .action-btn {
     background: linear-gradient(135deg, #2a1a10, #1a0f08);
-    border: 3px solid #c89a4a;
-    padding: 15px 25px;
+    border: 2px solid #c89a4a;
+    padding: 12px 24px;
     font-family: 'Cinzel', serif;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
-    border-radius: 60px;
+    border-radius: 50px;
     color: #f3d48c;
     cursor: pointer;
     transition: all 0.1s;
-    box-shadow: 0 5px 0 #5a3a1a;
-    min-width: 120px;
+    box-shadow: 0 4px 0 #5a3a1a;
 }
 
 .action-btn:active {
-    transform: translateY(3px);
+    transform: translateY(2px);
     box-shadow: 0 2px 0 #5a3a1a;
 }
 
-/* Результат */
 .result-panel {
-    width: 100%;
-    margin-top: 15px;
-}
-
-.result-panel h2 {
-    color: #e8c47a;
-    text-align: center;
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #8a6a3a;
-    padding-bottom: 10px;
+    width: 280px;
 }
 
 .stats-mini {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
-    padding: 12px;
+    margin-bottom: 20px;
+    padding: 10px;
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 20px;
+    border-radius: 15px;
     color: #e8c47a;
-    font-size: 1.1rem;
 }
 
 .current-ingredients h3, .history-mini h3 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #c9a85b;
-    margin: 15px 0 10px;
+    margin: 15px 0 8px;
 }
 
 #cauldronIngredientsList, #historyListMini {
@@ -570,26 +505,25 @@ body {
 
 #cauldronIngredientsList li, #historyListMini li {
     background: rgba(30, 20, 12, 0.7);
-    margin: 6px 0;
-    padding: 8px 15px;
-    border-radius: 30px;
-    font-size: 1rem;
+    margin: 5px 0;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
     color: #eedbaa;
-    border-left: 4px solid #c89a4a;
+    border-left: 3px solid #c89a4a;
 }
 
 .result-message {
     background: rgba(0, 0, 0, 0.6);
-    border-radius: 20px;
-    padding: 15px;
+    border-radius: 15px;
+    padding: 12px;
     margin: 15px 0;
     text-align: center;
     color: #f2e2bc;
-    font-size: 1rem;
+    font-size: 0.85rem;
     min-height: 80px;
 }
 
-/* Анимации */
 .bubble-effect {
     position: absolute;
     background: radial-gradient(circle, #ffdd99, #ffaa66);
@@ -600,7 +534,7 @@ body {
 
 @keyframes bubblePop {
     0% { bottom: 10%; opacity: 0.9; transform: scale(0.3);}
-    100% { bottom: 75%; opacity: 0; transform: scale(1.0);}
+    100% { bottom: 75%; opacity: 0; transform: scale(1.1);}
 }
 
 .particles-container {
@@ -630,19 +564,19 @@ body {
 }
 
 @keyframes cartoonShake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+    0% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(-5px) rotate(-2deg); }
+    75% { transform: translateX(5px) rotate(2deg); }
+    100% { transform: translateX(0) rotate(0deg); }
 }
 
-/* Экраны победы/поражения */
 .victory-overlay, .gameover-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.95);
+    background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(8px);
     z-index: 1000;
     display: none;
@@ -654,42 +588,60 @@ body {
     text-align: center;
     background: linear-gradient(135deg, #2a1a10, #1a0f08);
     border: 3px solid #ffcc66;
-    border-radius: 50px;
-    padding: 35px;
-    max-width: 90%;
-    box-shadow: 0 0 80px rgba(255, 200, 100, 0.5);
+    border-radius: 60px;
+    padding: 40px;
+    max-width: 600px;
+    box-shadow: 0 0 100px rgba(255, 200, 100, 0.5);
 }
 
 .gameover-card {
     border-color: #aa4444;
+    box-shadow: 0 0 100px rgba(200, 50, 50, 0.3);
 }
 
 .victory-card h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: #ffdd99;
+    text-shadow: 0 0 10px #ffaa44;
 }
 
 .gameover-card h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: #cc5555;
+    text-shadow: 0 0 10px #ff0000;
 }
 
 .victory-stats {
-    margin: 25px 0;
+    margin: 30px 0;
     font-size: 1.2rem;
     color: #eedbaa;
     line-height: 2;
 }
 
-.glow-btn {
-    background: linear-gradient(135deg, #4a2a1a, #2a1a0a);
-    border: 2px solid #ffcc66;
-    color: #ffdd99;
-    font-size: 1.3rem;
-    padding: 12px 30px;
-    border-radius: 50px;
-    cursor: pointer;
-    font-family: 'Cinzel', serif;
+.gameover-message {
+    margin: 20px 0;
+    color: #ccaa88;
+    font-style: italic;
 }
 
-/* --- ВСЁ УВЕЛИЧЕНО ДЛЯ ТЕЛЕФОНА --- */
+@media (max-width: 1000px) {
+    .game-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .ingredients-panel, .result-panel {
+        width: 90%;
+    }
+    .cauldron-area {
+        min-width: auto;
+    }
+    .witch {
+        transform: scale(0.8);
+        right: -80px;
+        bottom: -30px;
+    }
+    .top-status {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
