@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Зельеваренье — Алхимическая лаборатория</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=MedievalSharp&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dark-ritual-bg"></div>
+    <div class="vignette"></div>
+    
+    <!-- Летающие светящиеся точки -->
+    <div class="floating-particles" id="floatingParticles"></div>
+    
+    <div class="game-container">
+        <!-- Левая панель — ингредиенты (теперь вверху на мобилке) -->
+        <div class="ingredients-panel dark-panel">
+            <h2>📦 Ингредиенты</h2>
+            <div class="ingredients-grid" id="ingredientsGrid">
+                <div class="ingredient-item" data-ingredient="mushroom">
+                    <div class="ingredient-icon">🍄</div>
+                    <span>Гриб</span>
+                </div>
+                <div class="ingredient-item" data-ingredient="root">
+                    <div class="ingredient-icon">🌿</div>
+                    <span>Корень</span>
+                </div>
+                <div class="ingredient-item" data-ingredient="berry">
+                    <div class="ingredient-icon">🫐</div>
+                    <span>Ягода</span>
+                </div>
+                <div class="ingredient-item" data-ingredient="dew">
+                    <div class="ingredient-icon">💧</div>
+                    <span>Роса</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Центр — котёл -->
+        <div class="cauldron-area">
+            <!-- Верхняя панель с жизнями и рангом -->
+            <div class="top-status">
+                <div class="lives-container">
+                    <span class="lives-label">❤️ Жизни</span>
+                    <div class="hearts" id="heartsContainer">
+                        <span class="heart">❤️</span>
+                        <span class="heart">❤️</span>
+                        <span class="heart">❤️</span>
+                    </div>
+                </div>
+                <div class="rank-container">
+                    <span class="rank-label">⭐ Ранг</span>
+                    <span class="rank-value" id="rankValue">Ученик</span>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="rankProgress" style="width: 0%;"></div>
+                    </div>
+                    <span class="xp-text" id="xpText">0 / 100</span>
+                </div>
+            </div>
+
+            <div class="fire-pit">
+                <div class="fire"></div>
+                <div class="fire-core"></div>
+                <div class="fire-light"></div>
+            </div>
+            
+            <div class="cauldron-wrapper" id="cauldronWrapper">
+                <!-- ВЕДЬМОЧКА -->
+                <div class="witch" id="witch">
+                    <img src="ведьмочка.png" alt="Ведьмочка" class="witch-image" id="witchImage">
+                    <div class="witch-bubble" id="witchBubble" style="display: none;">
+                        <span id="witchText">Я здесь!</span>
+                    </div>
+                </div>
+
+                <div class="cauldron" id="cauldron">
+                    <div class="cauldron-leg leg-left"></div>
+                    <div class="cauldron-leg leg-right"></div>
+                    <div class="cauldron-leg leg-center"></div>
+                    
+                    <div class="cauldron-body"></div>
+                    <div class="cauldron-rim"></div>
+                    <div class="cauldron-inner" id="cauldronInner">
+                        <div class="liquid" id="liquid"></div>
+                        <div class="ingredients-in-cauldron" id="ingredientsInCauldron"></div>
+                    </div>
+                    <div class="steam-container" id="steamContainer">
+                        <div class="steam steam1"></div>
+                        <div class="steam steam2"></div>
+                        <div class="steam steam3"></div>
+                        <div class="steam steam4"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cauldron-glow" id="cauldronGlow"></div>
+            
+            <div class="action-buttons">
+                <button class="action-btn stir-btn" id="stirBtn">🥄 Помешать</button>
+                <button class="action-btn brew-btn" id="brewBtn">⚡ Сварить</button>
+                <button class="action-btn reset-cauldron-btn" id="resetCauldronBtn">🗑️ Очистить</button>
+            </div>
+            
+            <!-- Дополнительная кнопка для мобильной версии -->
+            <div class="mobile-add-buttons" id="mobileAddButtons" style="display: none;">
+                <button class="mobile-add-btn" data-ingredient="mushroom">🍄 Гриб</button>
+                <button class="mobile-add-btn" data-ingredient="root">🌿 Корень</button>
+                <button class="mobile-add-btn" data-ingredient="berry">🫐 Ягода</button>
+                <button class="mobile-add-btn" data-ingredient="dew">💧 Роса</button>
+            </div>
+        </div>
+
+        <!-- Правая панель — результат и статистика -->
+        <div class="result-panel dark-panel">
+            <h2>📜 Алхимический журнал</h2>
+            <div class="stats-mini">
+                <div class="stat-mini">🏆 Очки: <span id="scoreValue">0</span></div>
+                <div class="stat-mini">📖 Рецептов: <span id="uniqueCount">0</span>/<span id="totalRecipes">8</span></div>
+            </div>
+            <div class="current-ingredients">
+                <h3>В котле:</h3>
+                <ul id="cauldronIngredientsList"></ul>
+            </div>
+            <div class="result-message" id="resultMessage">
+                <p>✨ Нажми на ингредиент, чтобы добавить в котёл ✨</p>
+            </div>
+            <div class="history-mini">
+                <h3>Последние варки:</h3>
+                <ul id="historyListMini"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <!-- ЭКРАН ПОБЕДЫ -->
+    <div id="victoryScreen" class="victory-overlay">
+        <div class="victory-card">
+            <h1>🏆 ПОБЕДА! 🏆</h1>
+            <h2>Эликсир Бессмертия создан!</h2>
+            <div class="victory-stats">
+                <p>⭐ Ранг: <span id="finalRank"></span></p>
+                <p>🧪 Зелий: <span id="finalPotions"></span></p>
+                <p>📜 Рецептов: <span id="finalRecipes"></span>/8</p>
+            </div>
+            <button id="restartFromVictoryBtn" class="glow-btn">✨ Заново ✨</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН ПРОИГРЫША -->
+    <div id="gameOverScreen" class="gameover-overlay">
+        <div class="gameover-card">
+            <h1>💀 ИГРА ОКОНЧЕНА 💀</h1>
+            <h2>Ты проиграл...</h2>
+            <div class="victory-stats">
+                <p>⭐ Ранг: <span id="gameoverRank"></span></p>
+                <p>🧪 Зелий: <span id="gameoverPotions"></span></p>
+                <p>📜 Рецептов: <span id="gameoverRecipes"></span>/8</p>
+            </div>
+            <button id="restartFromGameoverBtn" class="glow-btn">🧪 Снова 🧪</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
