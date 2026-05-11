@@ -623,6 +623,9 @@ body {
     color: #ccaa88;
     font-style: italic;
 }
+.ingredient-icon {
+    font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+}
 
 @media (max-width: 1000px) {
     .game-container {
