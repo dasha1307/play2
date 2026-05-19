@@ -10,12 +10,9 @@
 <body>
     <div class="dark-ritual-bg"></div>
     <div class="vignette"></div>
-    
-    <!-- Летающие светящиеся точки -->
     <div class="floating-particles" id="floatingParticles"></div>
-    
     <div class="game-container">
-        <!-- Левая панель — ингредиенты (теперь вверху на мобилке) -->
+       
         <div class="ingredients-panel dark-panel">
             <h2>📦 Ингредиенты</h2>
             <div class="ingredients-grid" id="ingredientsGrid">
@@ -38,9 +35,8 @@
             </div>
         </div>
 
-        <!-- Центр — котёл -->
         <div class="cauldron-area">
-            <!-- Верхняя панель с жизнями и рангом -->
+            
             <div class="top-status">
                 <div class="lives-container">
                     <span class="lives-label">❤️ Жизни</span>
@@ -67,7 +63,7 @@
             </div>
             
             <div class="cauldron-wrapper" id="cauldronWrapper">
-                <!-- ВЕДЬМОЧКА -->
+             
                 <div class="witch" id="witch">
                     <img src="ведьмочка.png" alt="Ведьмочка" class="witch-image" id="witchImage">
                     <div class="witch-bubble" id="witchBubble" style="display: none;">
@@ -103,7 +99,7 @@
                 <button class="action-btn reset-cauldron-btn" id="resetCauldronBtn">🗑️ Очистить</button>
             </div>
             
-            <!-- Дополнительная кнопка для мобильной версии -->
+            
             <div class="mobile-add-buttons" id="mobileAddButtons" style="display: none;">
                 <button class="mobile-add-btn" data-ingredient="mushroom">🍄 Гриб</button>
                 <button class="mobile-add-btn" data-ingredient="root">🌿 Корень</button>
@@ -112,7 +108,6 @@
             </div>
         </div>
 
-        <!-- Правая панель — результат и статистика -->
         <div class="result-panel dark-panel">
             <h2>📜 Алхимический журнал</h2>
             <div class="stats-mini">
@@ -135,7 +130,6 @@
 
     <div class="particles-container" id="particlesContainer"></div>
 
-    <!-- ЭКРАН ПОБЕДЫ -->
     <div id="victoryScreen" class="victory-overlay">
         <div class="victory-card">
             <h1>🏆 ПОБЕДА! 🏆</h1>
@@ -149,7 +143,6 @@
         </div>
     </div>
 
-    <!-- ЭКРАН ПРОИГРЫША -->
     <div id="gameOverScreen" class="gameover-overlay">
         <div class="gameover-card">
             <h1>💀 ИГРА ОКОНЧЕНА 💀</h1>
