@@ -1,4 +1,3 @@
-// ---------- ДАННЫЕ ИГРЫ ----------
 const recipes = {
     "mushroom,dew": { name: "🍄 Зелье здоровья", points: 10 },
     "root,dew": { name: "🌿 Зелье маны", points: 10 },
@@ -57,7 +56,6 @@ let heartsContainer;
 let victoryScreen, gameOverScreen;
 let restartFromVictoryBtn, restartFromGameoverBtn;
 
-// ---------- СОЗДАНИЕ ЛЕТАЮЩИХ ТОЧЕК ----------
 function createFloatingParticles() {
     const container = document.getElementById('floatingParticles');
     if (!container) return;
@@ -75,7 +73,6 @@ function createFloatingParticles() {
     }
 }
 
-// ---------- ИНИЦИАЛИЗАЦИЯ ----------
 document.addEventListener('DOMContentLoaded', () => {
     createFloatingParticles();
     
@@ -103,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     totalRecipesSpan.textContent = Object.keys(recipes).length;
     
-    // МОБИЛЬНОЕ УПРАВЛЕНИЕ: нажатие на ингредиент вместо drag-and-drop
     const ingredientItems = document.querySelectorAll('.ingredient-item');
     ingredientItems.forEach(item => {
         item.addEventListener('click', (e) => {
@@ -111,28 +107,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const ingredient = item.dataset.ingredient;
             if (gameState.lives > 0) addIngredientToCauldron(ingredient);
         });
-        
-        // Для сенсорных экранов также
+
         item.addEventListener('touchstart', (e) => {
             e.preventDefault();
             const ingredient = item.dataset.ingredient;
             if (gameState.lives > 0) addIngredientToCauldron(ingredient);
         });
     });
-    
-    // Кнопки
+
     stirBtn.addEventListener('click', () => { if(gameState.lives > 0) stir(); });
     brewBtn.addEventListener('click', () => { if(gameState.lives > 0) brew(); });
     resetCauldronBtn.addEventListener('click', () => { if(gameState.lives > 0) clearCauldron(); });
     restartFromVictoryBtn.addEventListener('click', fullReset);
     restartFromGameoverBtn.addEventListener('click', fullReset);
-    
-    // Для сенсорных экранов на кнопках
+
     stirBtn.addEventListener('touchstart', (e) => { e.preventDefault(); if(gameState.lives > 0) stir(); });
     brewBtn.addEventListener('touchstart', (e) => { e.preventDefault(); if(gameState.lives > 0) brew(); });
     resetCauldronBtn.addEventListener('touchstart', (e) => { e.preventDefault(); if(gameState.lives > 0) clearCauldron(); });
-    
-    // Клик по ведьмочке
+
     const witchElement = document.getElementById('witch');
     if (witchElement) {
         witchElement.addEventListener('click', () => {
@@ -155,7 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
     showMessage("✨ Нажми на ингредиент, чтобы добавить в котёл! ✨", "info");
 });
 
-// ---------- ЛОГИКА ЖИЗНЕЙ ----------
 function loseLife() {
     gameState.lives--;
     updateHeartsUI();
@@ -220,7 +211,6 @@ function fullReset() {
     }, 500);
 }
 
-// ---------- ОСНОВНЫЕ МЕХАНИКИ ----------
 function addIngredientToCauldron(ingredient) {
     if (gameState.lives <= 0) return;
     if (gameState.ingredientsInCauldron.length >= 4) {
@@ -326,7 +316,6 @@ function brew() {
     updateCauldronDisplay();
 }
 
-// ---------- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ----------
 function showWitchMessage(text) {
     const bubble = document.getElementById('witchBubble');
     const textSpan = document.getElementById('witchText');
